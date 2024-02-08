@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 namespace OlMaPixelBoard.Pages
 {
@@ -9,6 +10,9 @@ namespace OlMaPixelBoard.Pages
         private readonly ILogger<IndexModel> _logger;
         static readonly HttpClient client = new HttpClient();
         public string testPixel;
+        public int red;
+        public int green;
+        public int bleu;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -24,6 +28,16 @@ namespace OlMaPixelBoard.Pages
                 string content = response.Content.ReadAsStringAsync().Result;
                 Console.WriteLine("Success" + content);
                 testPixel = content;
+
+
+                var match = Regex.Match(content, "\"Red\":(.*),\"Green\":(.*),\"Blue\":(.*)}");   
+               
+                red = Convert.ToInt32(match.Groups[1].Value);
+
+                green = Convert.ToInt32(match.Groups[2].Value);
+
+                bleu = Convert.ToInt32(match.Groups[3].Value);
+
 
             }
             else
