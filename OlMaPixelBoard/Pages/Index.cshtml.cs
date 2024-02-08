@@ -8,6 +8,8 @@ namespace OlMaPixelBoard.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         static readonly HttpClient client = new HttpClient();
+        public string testPixel;
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -21,12 +23,13 @@ namespace OlMaPixelBoard.Pages
             {
                 string content = response.Content.ReadAsStringAsync().Result;
                 Console.WriteLine("Success" + content);
+                testPixel = content;
 
             }
             else
             {
                 System.Diagnostics.Debug.WriteLine(response.StatusCode);
-                Console.WriteLine($"The Error isch: {response.StatusCode}");
+                Console.WriteLine($"Da Error is: {response.StatusCode}");
             }
         }
     }
