@@ -13,6 +13,11 @@ namespace OlMaPixelBoard.Pages
         public int red;
         public int green;
         public int bleu;
+        int index = 0;
+
+        public int[,] reds = new int[16, 16];
+        public int[,] greens = new int[16, 16];
+        public int[,] bleus = new int[16, 16];
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -21,29 +26,60 @@ namespace OlMaPixelBoard.Pages
 
         public void OnGet()
         {
-            HttpResponseMessage response = client.GetAsync("https://edu.jakobmeier.ch/api/color/0/4").Result;
+            
+            
 
-            if (response.IsSuccessStatusCode)
+
+            //HttpResponseMessage response = client.GetAsync("https://edu.jakobmeier.ch/api/color/0/4").Result;
+
+
+            for (int y = 0; y < 16; y++)
             {
-                string content = response.Content.ReadAsStringAsync().Result;
-                Console.WriteLine("Success" + content);
-                testPixel = content;
+                for (int x = 0; x < 16; x++)
+                {
+                    HttpResponseMessage response = client.GetAsync("https://edu.jakobmeier.ch/api/color/" + y + "/" + x).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+
+                        string content = response.Content.ReadAsStringAsync().Result;
+                        Console.WriteLine("Success" + content);
+                        testPixel = content;
 
 
-                var match = Regex.Match(content, "\"Red\":(.*),\"Green\":(.*),\"Blue\":(.*)}");   
-               
-                red = Convert.ToInt32(match.Groups[1].Value);
+                        var match = Regex.Match(content, "\"Red\":(.*),\"Green\":(.*),\"Blue\":(.*)}");
 
-                green = Convert.ToInt32(match.Groups[2].Value);
+                        reds[y, x] = Convert.ToInt32(match.Groups[1].Value);
 
-                bleu = Convert.ToInt32(match.Groups[3].Value);
+                        greens[y, x] = Convert.ToInt32(match.Groups[2].Value);
+
+                        bleus[y, x] = Convert.ToInt32(match.Groups[3].Value);
+
+                        index++;
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                        Console.WriteLine($"Da Error is: {response.StatusCode}");
+                    }
+
+                }
+
+                //string content = response.Content.ReadAsStringAsync().Result;
+                //Console.WriteLine("Success" + content);
+                //testPixel = content;
+                //
+                //
+                //var match = Regex.Match(content, "\"Red\":(.*),\"Green\":(.*),\"Blue\":(.*)}");   
+                //
+                //red = Convert.ToInt32(match.Groups[1].Value);
+                //
+                //green = Convert.ToInt32(match.Groups[2].Value);
+                //
+                //bleu = Convert.ToInt32(match.Groups[3].Value);
 
 
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine(response.StatusCode);
-                Console.WriteLine($"Da Error is: {response.StatusCode}");
+
             }
         }
     }

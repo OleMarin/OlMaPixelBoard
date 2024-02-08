@@ -4,13 +4,17 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Macher Client</h1>
 
 
-<p>Resultat is halt: @Model.testPixel</p>
+@for (int i = 0; i < 16; i++)
+{
+    <div class="container">
+        @for (int j = 0; j < 16; j++)
+        {
+            <div class="square" 
+                style="background-color: rgb(@Model.reds[i, j], @Model.greens[i, j], @Model.bleus[i, j])"></div>
 
-
-<div class="square" style="background-color: rgb(@Model.red,@Model.green,@Model.bleu)"></div>
+        }
+    </div>
+}
