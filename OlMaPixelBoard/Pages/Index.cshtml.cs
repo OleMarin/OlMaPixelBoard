@@ -26,11 +26,6 @@ namespace OlMaPixelBoard.Pages
 
         public void OnGet()
         {
-            
-            
-
-
-            //HttpResponseMessage response = client.GetAsync("https://edu.jakobmeier.ch/api/color/0/4").Result;
 
 
             for (int y = 0; y < 16; y++)

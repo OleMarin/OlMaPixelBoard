@@ -4,16 +4,23 @@
     ViewData["Title"] = "Home page";
 }
 
+<script>
+    function handleClick(event) {
+        event.target.style.backgroundColor = 'rgb(200, 0, 0)';
+    }
+</script>
+
+
 <h1>Macher Client</h1>
 
 
 @for (int i = 0; i < 16; i++)
 {
-    <div class="container">
+    <div class="container" onclick=" handleClick(event)">
         @for (int j = 0; j < 16; j++)
         {
-            <div class="square" 
-                style="background-color: rgb(@Model.reds[i, j], @Model.greens[i, j], @Model.bleus[i, j])"></div>
+            <div class="square"
+                 style="background-color: rgb(@Model.reds[i, j], @Model.greens[i, j], @Model.bleus[i, j])"></div>
 
         }
     </div>
