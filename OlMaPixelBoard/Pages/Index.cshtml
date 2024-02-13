@@ -5,8 +5,15 @@
 }
 
 <script>
-    function handleClick(event) {
-        event.target.style.backgroundColor = 'rgb(200, 0, 0)';
+    async function handleClick(event, x, y) {
+
+        var postElementX = document.getElementById('valueX');
+        var postElementY = document.getElementById('valueY');
+
+        postElementX.value = x;
+        postElementY.value = y;
+
+        document.getElementById('meinFormular').submit();
     }
 </script>
 
@@ -14,13 +21,20 @@
 <h1>Macher Client</h1>
 
 
+<form id="FormPlsWork" method="post">
+    <input type="number" name="ValueX" id="valueX" value="" readonly hidden="hidden" />
+    <input type="number" name="ValueY" id="valueY" value="" readonly hidden="hidden" />
+</form>
+
 @for (int i = 0; i < 16; i++)
 {
-    <div class="container" onclick=" handleClick(event)">
+    <div class="container">
         @for (int j = 0; j < 16; j++)
         {
-            <div class="square"
-                 style="background-color: rgb(@Model.reds[i, j], @Model.greens[i, j], @Model.bleus[i, j])"></div>
+            int inew = i;
+            int jnew = j;
+            <div class="square" onclick="handleClick(event, @inew, @jnew)"
+                 style="background-color:rgb(@Model.reds[i,j],@Model.greens[i,j],@Model.bleus[i,j]);"></div>
 
         }
     </div>
